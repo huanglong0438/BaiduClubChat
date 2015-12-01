@@ -34,7 +34,7 @@ public class RegisterActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if(!pass.equals(passAgain)){
-                    Toast.makeText(RegisterActivity.this,"两次输入的密码不一致请重新输入",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"",Toast.LENGTH_SHORT).show();
                     return ;
                 }else {
                     registe(name,pass);
@@ -46,3 +46,4 @@ public class RegisterActivity extends Activity {
 
     }
 }
+

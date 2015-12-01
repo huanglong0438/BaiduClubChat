@@ -46,4 +46,5 @@ public class GroupFragment extends Fragment {
         friends.add("≤‚ ‘»∫4");
         return friends;
     }
+
 }
