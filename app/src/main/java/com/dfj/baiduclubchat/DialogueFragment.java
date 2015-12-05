@@ -2,6 +2,7 @@ package com.dfj.baiduclubchat;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -41,6 +43,13 @@ public class DialogueFragment extends Fragment {
         ListView listView = (ListView) getActivity().findViewById(R.id.lv_dialog);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_expandable_list_item_1,getDialogs());
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(),ChatActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

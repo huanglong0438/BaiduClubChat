@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+    public static String myInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,5 +110,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     @Override
     public void onDrawerItemSelected(View view, int position) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        //обоъ
+
+
+        super.onDestroy();
     }
 }

@@ -38,13 +38,13 @@ public class ChatActivity extends Activity {
             public void onClick(View v) {
                 String content = inputText.getText().toString();
                 if(!"".equals(content)){
-                    Msg msg = new Msg("Êàë",content,Msg.TYPE_SEND);
+                    Msg msg = new Msg("Œ“",content,Msg.TYPE_SEND);
                     msgList.add(msg);
                     msgAdapter.notifyDataSetChanged();;
                     msgListView.setSelection(msgList.size());
                     inputText.setText("");
                 }else{
-                    Toast.makeText(ChatActivity.this,"ËæìÂÖ•ÂÜÖÂÆπ‰∏∫Á©∫",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatActivity.this," ‰»Îƒ⁄»›Œ™ø’",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -54,7 +54,7 @@ public class ChatActivity extends Activity {
     private void initMsgs(){
         Msg msg1 = new Msg("Tom","Hello ~",Msg.TYPE_RECEIVED);
         msgList.add(msg1);
-        Msg msg2 = new Msg("Êàë","‰Ω†ÊòØË∞ÅÔºü",Msg.TYPE_SEND);
+        Msg msg2 = new Msg("Œ“","ƒ„ «À≠£ø",Msg.TYPE_SEND);
         msgList.add(msg2);
     }
 }
