@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.dfj.baiduclubchat.FriendsFragment;
 import com.dfj.baiduclubchat.common.ClubMessage;
 import com.dfj.baiduclubchat.common.ClubMessageType;
 
@@ -55,8 +56,11 @@ public class ClientConServerThread extends Thread {
                 }else if(m.getType().equals(ClubMessageType.RET_ONLINE_FRIENDS)){//如果是好友列表
                     //更新好友，群
                     String s[] = m.getContent().split(",");
-                    //Log.i("", "--"+s[0]);
-                    //Log.i("", "--"+s[1]);
+                    //Log.i("MyDebug", "--"+s[0]);
+                    //Log.i("MyDebug", "--"+s[1]);
+                    Intent intent = new Intent("com.dfj.baiduclubchat.retfriends");
+                    intent.putExtra("res",s[0]);
+                    context.sendBroadcast(intent);
                     //BuddyActivity.buddyStr=s[0];
                     //GroupActivity.groupStr=s[1];
                 }

@@ -124,6 +124,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 }
                 Message msg = new Message();
                 msg.what = 1;
+                Bundle bundle = new Bundle();
+                msg.setData(bundle);
                 handler.sendMessage(msg);
             }else {
                 Message msg = new Message();
