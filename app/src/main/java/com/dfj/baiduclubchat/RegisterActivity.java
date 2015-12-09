@@ -86,10 +86,10 @@ public class RegisterActivity extends Activity {
         });
     }
     void registe(String userName,String userPass){
-       // new RegisterThread(userName,userPass).start();
-        Intent intent = new Intent(this,RegisteReturnActivity.class);
-        intent.putExtra("NewAccount",233);
-        startActivity(intent);
+        new RegisterThread(userName,userPass).start();
+//        Intent intent = new Intent(this,RegisteReturnActivity.class);
+//        intent.putExtra("NewAccount",233);
+//        startActivity(intent);
     }
     class RegisterThread extends Thread{
         private String username;
