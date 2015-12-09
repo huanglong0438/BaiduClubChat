@@ -57,6 +57,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 case 1:
                     Toast.makeText(mActivityReference.get(),"登陆成功",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mActivityReference.get(),MainActivity.class);
+                    intent.putExtra("user",msg.getData().getSerializable("user"));
                     mActivityReference.get().startActivity(intent);
                     break;
             }
@@ -116,6 +117,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     //发送一个要求返回在线好友的请求的Message
                     ObjectOutputStream oos = new ObjectOutputStream	(
                             ManageClientConServer.getClientConServerThread(user.getAccount()).getS().getOutputStream());
+                    ManageClientConServer.addObjectOutputStream(user.getAccount(),oos);
                     ClubMessage m=new ClubMessage();
                     m.setType(ClubMessageType.GET_ONLINE_FRIENDS);
                     m.setSender(user.getAccount());
@@ -126,6 +128,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Message msg = new Message();
                 msg.what = 1;
                 Bundle bundle = new Bundle();
+                bundle.putSerializable("user",user);
                 msg.setData(bundle);
                 handler.sendMessage(msg);
             }else {

@@ -28,8 +28,8 @@ public class RegisteReturnActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegisteReturnActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                RegisteReturnActivity.this.finish();
             }
         });
     }

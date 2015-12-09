@@ -40,7 +40,7 @@ public class ClientConServerThread extends Thread {
                 if(m.getType().equals(ClubMessageType.COM_MES)
                         || m.getType().equals(ClubMessageType.GROUP_MES)){//如果是聊天消息
                     //把从服务器获得的消息通过广播发送
-                    Intent intent = new Intent("org.yhn.yq.mes");
+                    Intent intent = new Intent("com.dfj.bcc.mes");
                     String[] message=new String[]{
                             m.getGaccount()+"",
                             m.getGroupNick(),

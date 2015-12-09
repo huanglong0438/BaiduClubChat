@@ -47,6 +47,7 @@ public class DialogueFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(),ChatActivity.class);
+                intent.putExtra("user",DialogueFragment.this.getActivity().getIntent().getSerializableExtra("user"));
                 startActivity(intent);
             }
         });

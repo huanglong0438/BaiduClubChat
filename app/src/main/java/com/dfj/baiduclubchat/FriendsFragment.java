@@ -63,6 +63,7 @@ public class FriendsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int faccount = friends.get(position).getAccount();
                 Intent intent = new Intent(getActivity(),ChatActivity.class);
+                intent.putExtra("user",FriendsFragment.this.getActivity().getIntent().getSerializableExtra("user"));
                 intent.putExtra("faccount",faccount);
                 getActivity().startActivity(intent);
             }
