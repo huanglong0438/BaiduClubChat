@@ -39,6 +39,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private EditText PasswordInput;
 
     public MyHandler handler = new MyHandler(this);
+    public Handler handler2 = new Handler();
 
     private static class MyHandler extends Handler {
         WeakReference<LoginActivity> mActivityReference;

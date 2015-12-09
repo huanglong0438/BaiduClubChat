@@ -1,11 +1,15 @@
 package com.dfj.baiduclubchat.model;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.dfj.baiduclubchat.LoginActivity;
 import com.dfj.baiduclubchat.MainActivity;
 import com.dfj.baiduclubchat.common.ClubMessage;
 import com.dfj.baiduclubchat.common.ClubMessageType;
 import com.dfj.baiduclubchat.common.User;
+import com.dfj.baiduclubchat.entity.FriendInfo;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,9 +32,16 @@ public class ClubClient {
         try {
             s=new Socket();
             try{
-                s.connect(new InetSocketAddress("192.168.1.101",9999),2000);
+                s.connect(new InetSocketAddress("192.168.1.100",9999),2000);
             }catch(SocketTimeoutException e){
                 //连接服务器超时
+                final String exception = e.getMessage();
+                ((LoginActivity) context).handler2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context,exception,Toast.LENGTH_SHORT).show();
+                    }
+                });
                 return false;
             }
             ObjectOutputStream oos=new ObjectOutputStream(s.getOutputStream());
@@ -51,6 +62,13 @@ public class ClubClient {
                 b=false;
             }
         } catch (IOException | ClassNotFoundException e) {
+            final String exception = e.getMessage();
+            ((LoginActivity) context).handler2.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context,exception,Toast.LENGTH_SHORT).show();
+                }
+            });
             e.printStackTrace();
         }
         return b;
@@ -61,7 +79,7 @@ public class ClubClient {
         try {
             s=new Socket();
             try{
-                s.connect(new InetSocketAddress("192.168.1.101",9999),2000);
+                s.connect(new InetSocketAddress("192.168.1.100",9999),2000);
             }catch(SocketTimeoutException e){
                 //连接服务器超时
                 return -1;

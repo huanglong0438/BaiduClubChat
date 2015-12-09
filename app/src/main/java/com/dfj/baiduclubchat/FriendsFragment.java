@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -38,6 +39,7 @@ public class FriendsFragment extends Fragment {
 
     public static String res = "";
     private ListView listView;
+    ArrayList<FriendInfo> friends = null;
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -55,27 +57,39 @@ public class FriendsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         listView = (ListView) getActivity().findViewById(R.id.lv_friends);
-        IntentFilter filter = new IntentFilter("com.dfj.baiduclubchat.retfriends");
-        getActivity().registerReceiver(friendListReceiver,filter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int faccount = friends.get(position).getAccount();
+                Intent intent = new Intent(getActivity(),ChatActivity.class);
+                intent.putExtra("faccount",faccount);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     private BroadcastReceiver friendListReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String res = intent.getExtras().getString("res");
-            ArrayList<FriendInfo> friends = Resolver.resolveFriendsList(res);
+            friends = Resolver.resolveFriendsList(res);
             FriendsAdapter adapter = new FriendsAdapter(getActivity(),friends);
             listView.setAdapter(adapter);
         }
     };
 
 
-    private ArrayList<String> getFriends(){
-        ArrayList<String> friends = new ArrayList<>();
-        friends.add("张三");
-        friends.add("李四");
-        friends.add("路人甲");
-        friends.add("蒙奇·D·路飞");
-        return friends;
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter("com.dfj.baiduclubchat.retfriends");
+        getActivity().registerReceiver(friendListReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(friendListReceiver);
     }
 }

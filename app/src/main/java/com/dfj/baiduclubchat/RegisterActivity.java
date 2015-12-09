@@ -1,6 +1,7 @@
 package com.dfj.baiduclubchat;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,7 +47,9 @@ public class RegisterActivity extends Activity {
                     break;
                 case 1:
                     int account = msg.getData().getInt("NewAccount");
-                    Toast.makeText(mActivityReference.get(),"注册成功,新的id号为"+account,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mActivityReference.get(),RegisteReturnActivity.class);
+                    intent.putExtra("NewAccount",account);
+                    mActivityReference.get().startActivity(intent);
                     break;
             }
         }
@@ -83,7 +86,10 @@ public class RegisterActivity extends Activity {
         });
     }
     void registe(String userName,String userPass){
-        new RegisterThread(userName,userPass).start();
+       // new RegisterThread(userName,userPass).start();
+        Intent intent = new Intent(this,RegisteReturnActivity.class);
+        intent.putExtra("NewAccount",233);
+        startActivity(intent);
     }
     class RegisterThread extends Thread{
         private String username;

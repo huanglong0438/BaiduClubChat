@@ -1,4 +1,4 @@
-package com.dfj.baiduclubchat;
+package com.dfj.baiduclubchat.entity;
 
 /**
  * Created by fyy on 2015/12/1.

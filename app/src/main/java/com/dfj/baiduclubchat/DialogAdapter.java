@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dfj.baiduclubchat.entity.Msg;
+
 import java.util.List;
 
 /**
