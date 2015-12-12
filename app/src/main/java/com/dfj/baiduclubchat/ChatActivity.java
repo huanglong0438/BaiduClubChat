@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.dfj.baiduclubchat.Util.Resolver;
 import com.dfj.baiduclubchat.common.ClubMessage;
 import com.dfj.baiduclubchat.common.ClubMessageType;
 import com.dfj.baiduclubchat.common.User;
@@ -37,13 +38,18 @@ public class ChatActivity extends Activity {
     private MsgAdapter msgAdapter;
     private List<Msg> msgList = new ArrayList<Msg>();
     private User user;
+    private int faccount;
+    private String fnick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        user = (User) getIntent().getSerializableExtra("user");
+        //user = (User) getIntent().getSerializableExtra("user");
+        user = Resolver.resolveUser(MainActivity.myInfo);
+        faccount = getIntent().getIntExtra("faccount",0);
+        fnick = getIntent().getStringExtra("fnick");
         initMsgs();
         msgAdapter = new MsgAdapter(ChatActivity.this,R.layout.msg_item,msgList);
         inputText = (EditText) findViewById(R.id.input_text);
@@ -55,8 +61,7 @@ public class ChatActivity extends Activity {
             public void onClick(View v) {
                 String content = inputText.getText().toString();
                 if(!"".equals(content)){
-                    new SendMsgThread(content,user.getAccount()).start();  //先试试发给自己
-
+                    new SendMsgThread(content,faccount).start();  //先试试发给自己
                     Msg msg = new Msg("我",content,Msg.TYPE_SEND);
                     msgList.add(msg);
                     msgAdapter.notifyDataSetChanged();;
@@ -83,7 +88,6 @@ public class ChatActivity extends Activity {
     }
 
     public class MyBroadcastReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             String[] msgContent = intent.getStringArrayExtra("message");
@@ -101,7 +105,6 @@ public class ChatActivity extends Activity {
             this.content = content;
             this.receiverAccount = receiverAccount;
         }
-
         public void run(){
             try {
                 ClubMessage cm = new ClubMessage();

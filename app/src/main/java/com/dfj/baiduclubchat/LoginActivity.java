@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
@@ -115,8 +116,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             if(b){
                 try {
                     //发送一个要求返回在线好友的请求的Message
-                    ObjectOutputStream oos = new ObjectOutputStream	(
-                            ManageClientConServer.getClientConServerThread(user.getAccount()).getS().getOutputStream());
+                    ObjectOutputStream oos = new ObjectOutputStream	(ManageClientConServer.getClientConServerThread(user.getAccount()).getS().getOutputStream());
                     ManageClientConServer.addObjectOutputStream(user.getAccount(),oos);
                     ClubMessage m=new ClubMessage();
                     m.setType(ClubMessageType.GET_ONLINE_FRIENDS);

@@ -1,5 +1,6 @@
 package com.dfj.baiduclubchat.Util;
 
+import com.dfj.baiduclubchat.common.User;
 import com.dfj.baiduclubchat.entity.FriendInfo;
 
 import java.util.ArrayList;
@@ -23,6 +24,17 @@ public class Resolver {
             }
         }
         return friends;
+    }
 
+    public static User resolveUser(String res){
+        String ss[] = res.split("_");
+        User user = new User();
+        user.setAccount(Integer.parseInt(ss[0]));
+        user.setNick(ss[1]);
+        user.setTrends(ss[3]);
+//        user.setSex(ss[4]);
+//        user.setAge(Integer.parseInt(ss[5]));
+//        user.setLev(Integer.parseInt(ss[6]));
+        return user;
     }
 }
