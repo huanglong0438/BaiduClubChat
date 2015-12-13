@@ -23,6 +23,7 @@ import java.net.SocketTimeoutException;
  */
 public class ClubClient {
     private Context context;
+    private static final String ip = "10.170.24.104";
     public Socket s;
     public ClubClient(Context context){
         this.context = context;
@@ -32,7 +33,7 @@ public class ClubClient {
         try {
             s=new Socket();
             try{
-                s.connect(new InetSocketAddress("192.168.1.100",9999),2000);
+                s.connect(new InetSocketAddress(ip,9999),2000);
             }catch(SocketTimeoutException e){
                 //连接服务器超时
                 final String exception = e.getMessage();
@@ -79,7 +80,7 @@ public class ClubClient {
         try {
             s=new Socket();
             try{
-                s.connect(new InetSocketAddress("192.168.1.100",9999),2000);
+                s.connect(new InetSocketAddress(ip,9999),2000);
             }catch(SocketTimeoutException e){
                 //连接服务器超时
                 return -1;

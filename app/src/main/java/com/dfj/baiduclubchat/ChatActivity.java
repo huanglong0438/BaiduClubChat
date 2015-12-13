@@ -40,6 +40,7 @@ public class ChatActivity extends Activity {
     private User user;
     private int faccount;
     private String fnick;
+    MyBroadcastReceiver br;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,24 +61,34 @@ public class ChatActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String content = inputText.getText().toString();
-                if(!"".equals(content)){
-                    new SendMsgThread(content,faccount).start();  //先试试发给自己
-                    Msg msg = new Msg("我",content,Msg.TYPE_SEND);
+                if (!"".equals(content)) {
+                    new SendMsgThread(content, user.getAccount()).start();  //先试试发给自己
+                    Msg msg = new Msg("我", content, Msg.TYPE_SEND);
                     msgList.add(msg);
-                    msgAdapter.notifyDataSetChanged();;
+                    msgAdapter.notifyDataSetChanged();
+                    ;
                     msgListView.setSelection(msgList.size());
                     inputText.setText("");
-                }else{
-                    Toast.makeText(ChatActivity.this,"输入内容为空",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ChatActivity.this, "输入内容为空", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction("com.dfj.bcc.mes");
-        MyBroadcastReceiver br = new MyBroadcastReceiver();
+        br = new MyBroadcastReceiver();
         registerReceiver(br, myIntentFilter);
+    }
 
+    @Override
+    protected void onPause() {
+        unregisterReceiver(br);
+        super.onPause();
     }
 
     private void initMsgs(){

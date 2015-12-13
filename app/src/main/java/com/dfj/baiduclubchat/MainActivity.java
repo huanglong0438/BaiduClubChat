@@ -1,8 +1,16 @@
 package com.dfj.baiduclubchat;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.dfj.baiduclubchat.entity.Msg;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -30,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
     public static String myInfo;
+    MyBroadcastReceiver br;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +96,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction("com.dfj.bcc.mes");
+        br = new MyBroadcastReceiver();
+        registerReceiver(br, myIntentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(br);
+        super.onPause();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -115,8 +140,32 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     @Override
     protected void onDestroy() {
         //下线
-
-
         super.onDestroy();
+    }
+
+
+    class MyBroadcastReceiver extends BroadcastReceiver {
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String[] msgContent = intent.getStringArrayExtra("message");
+            String name = msgContent[3];
+            String content = msgContent[5];
+            int faccount = Integer.parseInt(msgContent[2]);
+            Intent intentGoChat = new Intent(MainActivity.this,ChatActivity.class);
+            intentGoChat.putExtra("user", MainActivity.this.getIntent().getSerializableExtra("user"));
+            intentGoChat.putExtra("faccount",faccount);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intentGoChat, 0);
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            Notification notification = new Notification.Builder(MainActivity.this)
+                    .setSmallIcon(R.drawable.ic_friend)
+                    .setTicker("收到" + name +"的消息")
+                    .setContentTitle(name)
+                    .setContentText(content)
+                    .setContentIntent(pendingIntent).setNumber(1).build();
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            notificationManager.notify(1, notification);
+        }
     }
 }
