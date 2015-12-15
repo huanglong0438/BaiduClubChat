@@ -15,7 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.dfj.baiduclubchat.entity.Msg;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -23,6 +26,7 @@ import java.util.ArrayList;
  */
 public class DialogueFragment extends Fragment {
 
+    private List<Msg> dialogs = null;
 
     public DialogueFragment() {
         // Required empty public constructor
@@ -41,25 +45,25 @@ public class DialogueFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         ListView listView = (ListView) getActivity().findViewById(R.id.lv_dialog);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_expandable_list_item_1,getDialogs());
+        dialogs = getMsgList();
+        DialogAdapter adapter = new DialogAdapter(getActivity(),dialogs);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(),ChatActivity.class);
-                intent.putExtra("user",DialogueFragment.this.getActivity().getIntent().getSerializableExtra("user"));
                 startActivity(intent);
             }
         });
     }
 
 
-
-    private ArrayList<String> getDialogs() {
-        ArrayList<String> dialogs = new ArrayList<>();
-        dialogs.add("对话1");
-        dialogs.add("对话2");
-        dialogs.add("对话3");
+    private List<Msg> getMsgList(){
+        List<Msg> dialogs = new ArrayList<Msg>();
+        Msg msg = new Msg("我", "测试对话1", Msg.TYPE_SEND);
+        Msg msg2 = new Msg("路人甲","测试对话2",Msg.TYPE_RECEIVED);
+        dialogs.add(msg);
+        dialogs.add(msg2);
         return dialogs;
     }
 }

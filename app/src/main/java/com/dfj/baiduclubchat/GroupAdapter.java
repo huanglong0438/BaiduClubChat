@@ -22,7 +22,7 @@ public class GroupAdapter extends BaseAdapter {
     private List<Group> groupList;
     LayoutInflater inflater;
 
-    public void Group(Context context,List<Group> groupList){
+    public GroupAdapter(Context context,List<Group> groupList){
         this.context = context;
         this.groupList = groupList;
         inflater = LayoutInflater.from(context);

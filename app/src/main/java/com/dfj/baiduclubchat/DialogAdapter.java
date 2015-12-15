@@ -29,14 +29,14 @@ public class DialogAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = inflater.inflate(android.R.layout.simple_expandable_list_item_1,null);
+        convertView = inflater.inflate(R.layout.dialog_list_item,null);
 
         ImageView imageView1 = (ImageView) convertView.findViewById(R.id.imageView1);
         TextView dialogTitle = (TextView) convertView.findViewById(R.id.dialog_title);
         TextView dialogContent = (TextView) convertView.findViewById(R.id.dialog_content);
 
         Msg re = list.get(position);
-        imageView1.setImageResource(R.drawable.ic_friend);
+        imageView1.setImageResource(R.drawable.ic_profile);
         dialogTitle.setText(re.getName());
         dialogContent.setText(re.getContent());
         return convertView;

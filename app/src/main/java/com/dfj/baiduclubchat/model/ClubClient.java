@@ -23,7 +23,7 @@ import java.net.SocketTimeoutException;
  */
 public class ClubClient {
     private Context context;
-    private static final String ip = "10.170.24.104";
+    private static final String ip = "10.184.92.196";
     public Socket s;
     public ClubClient(Context context){
         this.context = context;

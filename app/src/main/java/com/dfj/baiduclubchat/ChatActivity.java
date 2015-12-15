@@ -62,7 +62,7 @@ public class ChatActivity extends Activity {
             public void onClick(View v) {
                 String content = inputText.getText().toString();
                 if (!"".equals(content)) {
-                    new SendMsgThread(content, user.getAccount()).start();  //先试试发给自己
+                    new SendMsgThread(content, faccount).start();  //先试试发给自己
                     Msg msg = new Msg("我", content, Msg.TYPE_SEND);
                     msgList.add(msg);
                     msgAdapter.notifyDataSetChanged();
